@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Configuration标签的属性 status，用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，
-可看到log4j2内部各种详细输出。可设置成OFF(关闭)或Error(只输出错误信息) -->
-<!--日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+<!--
+Configuration标签的属性 status，用于设置log4j2自身内部的信息输出，可以不设置，当设置成trace时，
+可看到log4j2内部各种详细输出。可设置成OFF(关闭)或Error(只输出错误信息)
+-->
+<!--
+日志级别以及优先级排序:
+    OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL
+-->
 <Configuration status="OFF">
 
     <Appenders>
@@ -13,8 +18,8 @@
             <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %clr{${sys:PID}} [%l] - %msg%n"/>
         </Console>
 
-        <Kafka name="Kafka" topic="app-logs">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS}[%t] %-5level [%l] - %msg"/>
+        <Kafka name="kafka" topic="app-logs">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level [%l] - %msg"/>
             <JsonLayout/>
             <Property name="bootstrap.servers">localhost:9092</Property>
         </Kafka>
@@ -22,8 +27,8 @@
 
     <Loggers>
         <Root level="ALL">
-            <AppenderRef ref="Kafka"/>
-            <AppenderRef ref="Console"/>
+            <AppenderRef ref="kafka"/>
+            <AppenderRef ref="console"/>
         </Root>
         <Logger name="org.apache.kafka" level="INFO"/><!-- avoid recursive logging -->
         <logger name="org.springframework" level="INFO"/>
